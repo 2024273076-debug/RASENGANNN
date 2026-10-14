@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Simple VR Rasengan</title>
+  <!-- A-Frame WebXR Library (Ringkas & Terus Dari CDN) -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #000;
+      font-family: sans-serif;
+    }
+    #ui-overlay {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 10px 20px;
+      border-radius: 20px;
+      color: #fff;
+      font-size: 14px;
+      border: 1px solid rgba(0, 212, 255, 0.4);
+      pointer-events: none;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Overlay Arahan Ringkas -->
+  <div id="ui-overlay">
+    🌀 <b>VR Rasengan</b><br>
+    Tekan butang <b>"VR"</b> di sudut kanan bawah untuk mod VR!
+  </div>
+
+  <!-- Scene A-Frame VR -->
+  <a-scene embedded vr-mode-ui="enabled: true">
+    
+    <!-- Pencahayaan Arena -->
+    <a-ambient-light color="#223344"></a-ambient-light>
+    <a-point-light position="0 2 0" color="#00ffff" intensity="2" distance="10"></a-point-light>
+
+    <!-- Kamera & Mod Pandangan VR -->
+    <a-entity id="rig" position="0 1.6 2">
+      <a-camera look-controls WASD-controls></a-camera>
+    </a-entity>
+
+    <!-- ENTI RASENGAN (Kumpulan 3D) -->
+    <a-entity position="0 1.5 -1.2" animation="property: rotation; to: 0 360 0; loop: true; dur: 2000; easing: linear">
+      
+      <!-- Bola Teras Bersinar (Core Sphere) -->
+      <a-sphere radius="0.2" color="#ffffff" material="emissive: #00e1ff; emissiveIntensity: 1; opacity: 0.95; transparent: true"></a-sphere>
+
+      <!-- Lapisan Dalam (Inner Swirl) -->
+      <a-sphere radius="0.32" color="#00d4ff" material="wireframe: true; opacity: 0.6; transparent: true; emissive: #00d4ff"
+                animation="property: rotation; to: 360 -360 360; loop: true; dur: 800; easing: linear"></a-sphere>
+
+      <!-- Lapisan Luar Aura (Outer Aura) -->
+      <a-sphere radius="0.45" color="#0088ff" material="wireframe: true; opacity: 0.35; transparent: true; emissive: #0055ff"
+                animation="property: rotation; to: -360 360 -360; loop: true; dur: 500; easing: linear"></a-sphere>
+
+      <!-- Cincin Tenaga Chakra (Chakra Rings) -->
+      <a-torus radius="0.38" tube="0.008" color="#ffffff" material="emissive: #00ffff; opacity: 0.8; transparent: true" rotation="45 0 0"
+               animation="property: rotation; to: 405 360 0; loop: true; dur: 600; easing: linear"></a-torus>
+
+      <a-torus radius="0.42" tube="0.006" color="#00e1ff" material="emissive: #00e1ff; opacity: 0.7; transparent: true" rotation="-30 60 0"
+               animation="property: rotation; to: -390 -300 360; loop: true; dur: 400; easing: linear"></a-torus>
+
+      <!-- Zarah-Zarah Kecil Berputar di Sekitar Rasengan -->
+      <a-entity id="particles">
+        <a-sphere radius="0.02" position="0.3 0.2 0" color="#ffffff" material="emissive: #00ffff"></a-sphere>
+        <a-sphere radius="0.015" position="-0.25 -0.15 0.2" color="#00ffff" material="emissive: #00ffff"></a-sphere>
+        <a-sphere radius="0.02" position="0.1 -0.3 -0.2" color="#ffffff" material="emissive: #00ffff"></a-sphere>
+        <a-sphere radius="0.01" position="-0.3 0.25 -0.1" color="#00e1ff" material="emissive: #00e1ff"></a-sphere>
+      </a-entity>
+
+    </a-entity>
+
+    <!-- Latar Belakang Gelap VR -->
+    <a-sky color="#050811"></a-sky>
+
+    <!-- Lantai Grid Visual -->
+    <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" color="#0a1128" material="opacity: 0.8; transparent: true"></a-plane>
+
+  </a-scene>
+
+</body>
+</html>
